@@ -107,12 +107,12 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginRight="48dp"
                 android:height="52dp"
+                android:autofillHints="hint"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/password_suggestion"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:paddingLeft="26dp"
-                android:paddingRight="26dp"
-                android:autofillHints="hint" />
+                android:paddingRight="26dp" />
 
             <EditText
                 android:id="@+id/register_password2_id"
@@ -122,12 +122,12 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginRight="48dp"
                 android:height="52dp"
+                android:autofillHints="hint"
                 android:background="@drawable/edit_text_background"
                 android:hint="@string/repeat_password_suggestion"
-                android:inputType="textVisiblePassword"
+                android:inputType="textPassword"
                 android:paddingLeft="26dp"
-                android:paddingRight="26dp"
-                android:autofillHints="hint" />
+                android:paddingRight="26dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
