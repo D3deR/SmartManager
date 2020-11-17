@@ -22,4 +22,14 @@
     <string name="sign_in">Sign in</string>
     <string name="register1">Don\'t have an account?</string>
     <string name="register2">register instead</string>
+
+    <string name="hello">Hello</string>
+    <string name="getStarted">Register to get started!</string>
+    <string name="register3">REGISTER</string>
+    <string name="repeat_password_suggestion">repeat password</string>
+    <string name="username">username</string>
+    <string name="register">Create account</string>
+    <string name="google_register">Log in with google</string>
+    <string name="login1">Already have an account?</string>
+    <string name="login2">Log in instead</string>
 </resources>
