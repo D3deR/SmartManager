@@ -3,15 +3,11 @@ package com.example.smartmanager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.View
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.example.smartmanager.R
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
+
 import com.google.firebase.auth.FirebaseAuth
 
 class RegisterScreen : AppCompatActivity() {
@@ -25,27 +21,63 @@ class RegisterScreen : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.register_btn)
         val firebase = FirebaseAuth.getInstance()
 
+
+
         registerButton.setOnClickListener{
            val sEmail = email.text.toString().trim()
             val sPassword = password1.text.toString().trim()
-            var emptyEmail = false;
-            var emptyPass = false;
+            val sPassword2 = password2.text.toString().trim()
+            val sUsername = username.text.toString().trim()
+            var emptyEmail = false
+            var emptyPass = false
+            var matchPass = true
+            var emptyUser = false
+            var validEmail = false
+            var longPass =true
+
             if(TextUtils.isEmpty(sEmail))
             {
                 Toast.makeText(this@RegisterScreen , "Email required!" , Toast.LENGTH_SHORT).show()
-                emptyEmail = true;
+                emptyEmail = true
             }
             if(TextUtils.isEmpty(sPassword))
             {
                 Toast.makeText(this@RegisterScreen , "Password required!" , Toast.LENGTH_SHORT).show()
-                emptyPass = true;
+                emptyPass = true
             }
-            if(!emptyEmail && !emptyPass)
+            if(sPassword != sPassword2)
+            {
+                Toast.makeText(this@RegisterScreen , "Password do not match!" , Toast.LENGTH_SHORT).show()
+                matchPass = false
+            }
+            if(TextUtils.isEmpty(sUsername))
+            {
+                Toast.makeText(this@RegisterScreen , "Username required!" , Toast.LENGTH_SHORT).show()
+                emptyUser = true
+            }
+            if(!Patterns.EMAIL_ADDRESS.matcher(sEmail).matches())
+            {
+                Toast.makeText(this@RegisterScreen , "E-mail not recognized!" , Toast.LENGTH_SHORT).show()
+                validEmail = false
+            }
+            if(sPassword.length < 6)
+            {
+                Toast.makeText(this@RegisterScreen , "Password is too short!" , Toast.LENGTH_SHORT).show()
+                longPass = false
+            }
+            if(!emptyEmail && !emptyPass && !emptyUser && matchPass && !validEmail && longPass)
             {
                 firebase.createUserWithEmailAndPassword(sEmail , sPassword).addOnCompleteListener{task ->
                     if (task.isSuccessful)
                     {
-                        Toast.makeText(this@RegisterScreen , "Auth successfull" , Toast.LENGTH_SHORT).show()
+                        firebase.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task->}
+                        if(task.isSuccessful) {
+                            Toast.makeText(
+                                this@RegisterScreen,
+                                "Auth successfull,check email",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                     else
                     {
