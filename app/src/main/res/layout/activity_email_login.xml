@@ -135,6 +135,23 @@
                     android:textColor="@color/white" />
 
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="18dp"
+                android:layout_marginLeft="48dp"
+                android:layout_marginRight="48dp">
+                <Button
+                    android:id="@+id/google_register_btn"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary"
+                    android:text="@string/google_register"
+                    android:textColor="@color/white"
+                    android:layout_height="0dp" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
