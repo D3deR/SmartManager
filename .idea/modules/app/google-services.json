@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "307913308458",
+    "firebase_url": "https://smart-manager-aaf9d.firebaseio.com",
+    "project_id": "smart-manager-aaf9d",
+    "storage_bucket": "smart-manager-aaf9d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307913308458:android:580fd61af4e53837bbc653",
+        "android_client_info": {
+          "package_name": "com.example.smartmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307913308458-te2pq0pnqf4krdad56csfap08g7mlmor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartmanager",
+            "certificate_hash": "daf89b727c49bbbf66e94843bc7341838a6ef704"
+          }
+        },
+        {
+          "client_id": "307913308458-cm1j1e7gpjjhq9q4dlmaktjefn2n6pid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smartmanager",
+            "certificate_hash": "886fc74612189c4f39d25c1e2801596883dfec1b"
+          }
+        },
+        {
+          "client_id": "307913308458-8k33m4ksd7m3gh4bfu1qgv4n8nkad183.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjQTh384uRO5_kjBGYYyB39rPeQiKzsLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307913308458-8k33m4ksd7m3gh4bfu1qgv4n8nkad183.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
