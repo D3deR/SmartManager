@@ -1,11 +1,14 @@
 package com.example.smartmanager
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 
 import com.google.firebase.auth.FirebaseAuth
@@ -19,9 +22,14 @@ class RegisterScreen : AppCompatActivity() {
         val password1  = findViewById<EditText>(R.id.register_password1_id)
         val password2 = findViewById<EditText>(R.id.register_password2_id)
         val registerButton = findViewById<Button>(R.id.register_btn)
+        val goToLoginButton = findViewById<TextView>(R.id.LoginButton)
         val firebase = FirebaseAuth.getInstance()
 
-
+        goToLoginButton.setOnClickListener{
+            val login = Intent(this , EmailLogin::class.java);
+            startActivity(login)
+            finish()
+        }
 
         registerButton.setOnClickListener{
            val sEmail = email.text.toString().trim()
