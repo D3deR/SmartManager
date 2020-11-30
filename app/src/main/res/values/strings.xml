@@ -35,4 +35,11 @@
     <string name="time">Time</string>
     <string name="pick_time">Pick time</string>
     <string name="pick_date">pick date</string>
+
+    <string name="activity_listView_row_date">Activity Date</string>
+    <string name="activity_listView_row_time">Activity Start Time</string>
+    <string name="activity_listView_row_description">Activity Description</string>
+    <string name="activity_listView_row_name">Activity Name</string>
+    <string name="activity_listView_row_color">Activity Color</string>
+    <string name="activity_listView_row_reminder">Activity Reminder</string>
 </resources>
