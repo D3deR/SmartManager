@@ -2,7 +2,6 @@ package com.example.smartmanager
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -18,9 +17,6 @@ class AddActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
-
-        val userUID = FirebaseAuth.getInstance().currentUser?.uid;
-        Toast.makeText(this, userUID.toString(), Toast.LENGTH_LONG).show()
 
         val uploadBtn = findViewById<Button>(R.id.buttonUploadActivity) as Button
         uploadBtn.setOnClickListener{
@@ -52,11 +48,12 @@ class AddActivity : AppCompatActivity() {
             }
 
             val userUID = firebaseUser.currentUser!!.uid
-            //create activity obj
 
             //val ref = FirebaseDatabase.getInstance().getReference(userUID).child("Activities")
             val ref = FirebaseDatabase.getInstance().getReference("User").child(userUID).child("Activities")
             val activityId = ref.push().key.toString()
+
+            //create activity obj
             val activity = Activity(activityId,mName, mDescription, mTime, mDate,mColor, mReminder, mCompleted)
 
             //send obj to firebase

@@ -1,6 +1,5 @@
 package com.example.smartmanager
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +14,6 @@ import com.example.smartmanager.model.User
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import java.util.EnumSet.of
 
 class RegisterScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +29,7 @@ class RegisterScreen : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("User")
 
         goToLoginButton.setOnClickListener{
-            val login = Intent(this , EmailLogin::class.java);
+            val login = Intent(this , EmailLogin::class.java)
             startActivity(login)
             finish()
         }
