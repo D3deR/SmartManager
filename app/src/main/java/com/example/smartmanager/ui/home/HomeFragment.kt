@@ -1,6 +1,10 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.smartmanager.ui.home
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +15,18 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.smartmanager.AddActivity
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 import com.google.android.gms.common.util.ArrayUtils.newArrayList
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
 class HomeFragment : Fragment() {
     lateinit var ref: DatabaseReference
     lateinit var activityList: MutableList<Activity>
-    lateinit var filteredActivity: MutableList<Activity>
+    //lateinit var filteredActivity: MutableList<Activity>
     lateinit var adapter: MyCustomAdapter
     lateinit var fragmentContext : Context
     private lateinit var homeViewModel: HomeViewModel
@@ -39,7 +46,19 @@ class HomeFragment : Fragment() {
         })
 
         fragmentContext = this.requireContext()
-        ref = FirebaseDatabase.getInstance().getReference("Activity")
+
+        //add button action
+        val addBtn : FloatingActionButton = root.findViewById(R.id.floating_action_button)
+        addBtn.setOnClickListener{
+            requireActivity().run{
+                startActivity(Intent(this, AddActivity::class.java))
+            }
+        }
+
+        //load list of activity from firebase
+        val userUID = FirebaseAuth.getInstance().currentUser?.uid
+        ref = FirebaseDatabase.getInstance().getReference("User").child(userUID!!).child("Activities")
+
         activityList = mutableListOf()
         ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -48,11 +67,10 @@ class HomeFragment : Fragment() {
 
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.exists()) {
-
                     activityList.clear()
                     for (h in p0.children) {
-                        val recipe = h.getValue(Activity::class.java)
-                        activityList.add(recipe!!)
+                        val activity = h.getValue(Activity::class.java)
+                        activityList.add(activity!!)
                     }
                     adapter =
                         MyCustomAdapter(
@@ -68,13 +86,17 @@ class HomeFragment : Fragment() {
         return root
     }
 
+
+
     class MyCustomAdapter(context: Context, activityList: MutableList<Activity>) : BaseAdapter() {
-        private val mContext : Context
+        private val mContext : Context = context
         var myActivityList = newArrayList<Activity>()
+
         init{
-            mContext = context
-            myActivityList = activityList as java.util.ArrayList<Activity>?;
+            myActivityList = activityList as java.util.ArrayList<Activity>?
         }
+
+        @SuppressLint("ViewHolder")
         override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
             val layoutInflater = LayoutInflater.from(mContext)
             val activityRow = layoutInflater.inflate(R.layout.activity_list_row, viewGroup, false)
@@ -86,7 +108,7 @@ class HomeFragment : Fragment() {
             activityStartTime.text = myActivityList[position].startTime.toString()
 
             val activityLocation = activityRow.findViewById<TextView>(R.id.textView_location)
-            activityLocation.text = myActivityList[position].color
+            activityLocation.text = myActivityList[position].description
 
             return activityRow
         }
