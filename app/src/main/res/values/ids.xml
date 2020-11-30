@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="timeBtn" type="id" />
+    <item name="dateBtn" type="id" />
+</resources>
