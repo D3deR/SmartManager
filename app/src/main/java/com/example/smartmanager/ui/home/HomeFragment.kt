@@ -97,7 +97,7 @@ class HomeFragment : Fragment() {
         }
 
         @SuppressLint("ViewHolder")
-        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
+        override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View? {
             val layoutInflater = LayoutInflater.from(mContext)
             val activityRow = layoutInflater.inflate(R.layout.activity_list_row, viewGroup, false)
 
@@ -105,10 +105,20 @@ class HomeFragment : Fragment() {
             activityName.text = myActivityList[position].activityName
 
             val activityStartTime = activityRow.findViewById<TextView>(R.id.textView_time)
-            activityStartTime.text = myActivityList[position].startTime.toString()
+            activityStartTime.text = myActivityList[position].startTime
 
-            val activityLocation = activityRow.findViewById<TextView>(R.id.textView_location)
-            activityLocation.text = myActivityList[position].description
+            val activityDescription = activityRow.findViewById<TextView>(R.id.textView_description)
+            activityDescription.text = myActivityList[position].description
+
+            val activityDate = activityRow.findViewById<TextView>(R.id.textView_date)
+            activityDate.text = myActivityList[position].date
+
+            val activityColor = activityRow.findViewById<TextView>(R.id.textView_color)
+            activityColor.text = myActivityList[position].color
+
+            val activityReminder = activityRow.findViewById<TextView>(R.id.textView_reminder)
+            if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"}else {activityReminder.text = "reminder inactive"}
+
 
             return activityRow
         }
