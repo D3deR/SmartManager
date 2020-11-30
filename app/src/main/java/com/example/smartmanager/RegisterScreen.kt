@@ -10,8 +10,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.smartmanager.model.Activity
+import com.example.smartmanager.model.User
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import java.util.EnumSet.of
 
 class RegisterScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +28,7 @@ class RegisterScreen : AppCompatActivity() {
         val registerButton = findViewById<Button>(R.id.register_btn)
         val goToLoginButton = findViewById<TextView>(R.id.LoginButton)
         val firebase = FirebaseAuth.getInstance()
+        val ref = FirebaseDatabase.getInstance().getReference("User")
 
         goToLoginButton.setOnClickListener{
             val login = Intent(this , EmailLogin::class.java);
@@ -78,8 +83,20 @@ class RegisterScreen : AppCompatActivity() {
                 firebase.createUserWithEmailAndPassword(sEmail , sPassword).addOnCompleteListener{task ->
                     if (task.isSuccessful)
                     {
+
+                        //create user object
+                        val userID = firebase.currentUser?.uid
+                        val activityList:List<Activity>? = emptyList()
+                        //val activityList:List<Activity>? = listOf<Activity>(Activity("123","mName", "mDescription", "mTime", "mDate","mColor", 0, 0),Activity("1234","mName", "mDescription", "mTime", "mDate","mColor", 0, 0))
+                        val user = userID?.let { it1 -> User(it1,username.text.toString(),activityList ) }
+                        //save object to firebase
+                        if (userID != null) {
+                            ref.child(userID).setValue(user)
+                        }
+
                         firebase.currentUser?.sendEmailVerification()?.addOnCompleteListener{ task->}
                         if(task.isSuccessful) {
+
                             Toast.makeText(
                                 this@RegisterScreen,
                                 "Auth successfull,check email",
