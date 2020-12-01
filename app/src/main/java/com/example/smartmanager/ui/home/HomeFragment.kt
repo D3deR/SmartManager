@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val listView: ListView = root.findViewById(R.id.activity_list_view)
-        val text1:TextView = root.findViewById(R.id.text_gallery)
+
         /*
         val text2:TextView = root.findViewById(R.id.text_slideshow)
         val fragment: Fragment? = fragmentManager?.findFragmentById(R.id.text_gallery)
