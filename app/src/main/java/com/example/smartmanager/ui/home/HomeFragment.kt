@@ -117,7 +117,7 @@ class HomeFragment : Fragment() {
             activityColor.text = myActivityList[position].color
 
             val activityReminder = activityRow.findViewById<TextView>(R.id.textView_reminder)
-            if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"}else {activityReminder.text = "reminder inactive"}
+            if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"} else {activityReminder.text = "reminder inactive"}
 
 
             return activityRow
