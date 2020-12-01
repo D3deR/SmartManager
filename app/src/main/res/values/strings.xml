@@ -35,4 +35,11 @@
     <string name="time">Time</string>
     <string name="pick_time">Pick time</string>
     <string name="pick_date">pick date</string>
+
+    <string-array name="color_array">
+    <item>Red</item>
+    <item>Blue</item>
+    <item>Yellow</item>
+    </string-array>
+
 </resources>

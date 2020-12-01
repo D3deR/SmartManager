@@ -23,6 +23,11 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
+        val spinner:Spinner = findViewById(R.id.editTextColor)
+        ArrayAdapter.createFromResource(this , R.array.color_array , android.R.layout.simple_spinner_item).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinner.adapter = adapter }
+
         val timeBtn  = findViewById<Button>(R.id.timeBtn)
         val dateBtn = findViewById<Button>(R.id.dateBtn)
         val timeView = findViewById<TextView>(R.id.editTextTime)
@@ -57,14 +62,14 @@ class AddActivity : AppCompatActivity() {
             val activityDescription : EditText = findViewById(R.id.editTextActivityDescription)
             val activityStartTime : TextView = findViewById(R.id.editTextTime)
             val activityDate : TextView = findViewById(R.id.editTextDate)
-            val activityColor : EditText = findViewById(R.id.editTextColor)
+            //val activityColor : EditText = findViewById(R.id.editTextColor)
             val reminder : CheckBox = findViewById(R.id.checkBoxReminder)
 
             val mName = activityName.text.toString()
             val mDescription = activityDescription.text.toString()
             val mTime = activityStartTime.text.toString()
             val mDate = activityDate.text.toString()
-            val mColor = activityColor.text.toString()
+            val mColor = spinner.selectedItem.toString();
             val mReminder = if(reminder.isChecked) 1 else 0
             val mCompleted = 0
 

@@ -6,29 +6,23 @@
     android:orientation="vertical"
     android:weightSum="5">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2">
         <CalendarView
+            android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp" />
-    </RelativeLayout>
+            android:layout_height="300dp">
+        </CalendarView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="215dp"
         android:layout_weight="3">
 
         <ListView
             android:id="@+id/activity_list_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            app:layout_constraintBottom_toTopOf="@+id/floating_action_button"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.041" />
 
