@@ -5,17 +5,12 @@ package com.example.smartmanager.ui.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.smartmanager.AddActivity
@@ -29,9 +24,10 @@ import com.google.firebase.database.*
 class HomeFragment : Fragment() {
     lateinit var ref: DatabaseReference
     lateinit var activityList: MutableList<Activity>
-    //lateinit var filteredActivity: MutableList<Activity>
+    lateinit var filteredActivity: MutableList<Activity>
     lateinit var adapter: MyCustomAdapter
     lateinit var fragmentContext : Context
+    lateinit var date : String
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -44,6 +40,7 @@ class HomeFragment : Fragment() {
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         val listView: ListView = root.findViewById(R.id.activity_list_view)
+        val calendar = root.findViewById<CalendarView>(R.id.calendarView)
 
         /*
         val text2:TextView = root.findViewById(R.id.text_slideshow)
@@ -63,6 +60,21 @@ class HomeFragment : Fragment() {
             requireActivity().run{
                 startActivity(Intent(this, AddActivity::class.java))
             }
+        }
+
+        //gets selected date from calendar
+        calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            val stringDate = "$dayOfMonth/$month/$year"
+            date = stringDate
+            Toast.makeText(context,stringDate,Toast.LENGTH_LONG).show()
+            filteredActivity = filterActivitiesByDate(date, activityList)
+            //show activities with selected date
+            adapter =
+                MyCustomAdapter(
+                    fragmentContext,
+                    filteredActivity
+                )
+            listView.adapter = adapter
         }
 
         //load list of activity from firebase
@@ -145,5 +157,16 @@ class HomeFragment : Fragment() {
             return myActivityList.size
         }
 
+    }
+
+    //filters the given list by date
+    fun filterActivitiesByDate(date :String, list : MutableList<Activity>) : MutableList<Activity>{
+        val filteredActivities: MutableList<Activity> = mutableListOf()
+        for(activity in list){
+            if (activity.date == date){
+                filteredActivities.add(activity)
+            }
+        }
+        return filteredActivities
     }
 }
