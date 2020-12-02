@@ -8,9 +8,9 @@
     <color name="background">#14000000</color>
 
     <color name="redRow">#ffebee</color>
-    <color name="redText">#8F1313</color>
-    <color name="blueRow">#e3f2fd</color>
+    <color name="redText">#9a0007</color> <!--#8F1313-->
+    <color name="blueRow">#0086c3</color>
     <color name="blueText">#283593</color>
     <color name="yellowRow">#fff9c4</color>
-    <color name="yellowText">#f9a825</color>
+    <color name="yellowText">#F1A938</color> <!--#fff176-->
 </resources>
