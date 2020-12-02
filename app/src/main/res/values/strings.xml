@@ -42,7 +42,7 @@
     <string name="activity_listView_row_name">Activity Name</string>
     <string name="activity_listView_row_color">Activity Color</string>
     <string name="activity_listView_row_reminder">Activity Reminder</string>
-
+    
     <string-array name="color_array">
     <item>Red</item>
     <item>Blue</item>
