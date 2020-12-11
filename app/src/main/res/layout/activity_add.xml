@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity">
+    tools:context=".activity.AddActivity">
 
     <EditText
         android:id="@+id/editTextActivityName"
@@ -135,13 +135,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:text="Color"
-        app:layout_constraintEnd_toStartOf="@+id/editTextColor"
+        app:layout_constraintEnd_toStartOf="@+id/editText_color"
         app:layout_constraintHorizontal_bias="0.157"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <Spinner
-        android:id="@+id/editTextColor"
+        android:id="@+id/editText_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -161,7 +161,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextColor" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_color" />
 
     <Button
         android:id="@+id/buttonUploadActivity"
