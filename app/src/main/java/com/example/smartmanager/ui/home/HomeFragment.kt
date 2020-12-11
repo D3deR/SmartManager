@@ -10,7 +10,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,8 +24,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.smartmanager.AddActivity
+import com.example.smartmanager.activity.AddActivity
 import com.example.smartmanager.R
+import com.example.smartmanager.activity.EditActivity
 import com.example.smartmanager.adapters.ActivityAdapter
 import com.example.smartmanager.model.Activity
 import com.google.android.gms.common.util.ArrayUtils.newArrayList
@@ -34,7 +34,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
     lateinit var ref: DatabaseReference
     lateinit var activityList: MutableList<Activity>
     lateinit var filteredActivity: MutableList<Activity>
@@ -85,7 +85,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(context,stringDate,Toast.LENGTH_LONG).show()
             filteredActivity = filterActivitiesByDate(date, activityList)
             //show activities with selected date
-            recyclerView.adapter = ActivityAdapter(filteredActivity)
+            recyclerView.adapter = ActivityAdapter(filteredActivity, this)
         }
 
         //load list of activity from firebase
@@ -105,7 +105,7 @@ class HomeFragment : Fragment() {
                         val activity = h.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
-                    recyclerView.adapter = ActivityAdapter(activityList)
+                    recyclerView.adapter = ActivityAdapter(activityList,this@HomeFragment)
                 }
             }
 
@@ -189,6 +189,7 @@ class HomeFragment : Fragment() {
                 }
             }
 
+
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
@@ -196,7 +197,7 @@ class HomeFragment : Fragment() {
     }
 
 
-
+    //nu mai folosim asta
     class MyCustomAdapter(context: Context, activityList: MutableList<Activity>) : BaseAdapter() {
         private val mContext : Context = context
         var myActivityList = newArrayList<Activity>()
@@ -334,6 +335,20 @@ class HomeFragment : Fragment() {
         val ref = FirebaseDatabase.getInstance().getReference("User").child(userUID!!).child("Activities")
         ref.child(activityList[index].id!!).removeValue()
         Toast.makeText(context,"removed successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemClick(activity: Activity) {
+        //Toast.makeText(this.context, "Item ${activity.activityName} clicked", Toast.LENGTH_SHORT).show()
+        val changePage = Intent(this.context, EditActivity::class.java)
+        changePage.putExtra("aId", activity.id)
+        changePage.putExtra("aName", activity.activityName)
+        changePage.putExtra("aDescription", activity.description)
+        changePage.putExtra("aStartTime", activity.startTime)
+        changePage.putExtra("aDate", activity.date)
+        changePage.putExtra("aColor", activity.color)
+        changePage.putExtra("aReminder", activity.reminder)
+        changePage.putExtra("aCompleted", activity.completed)
+        startActivity(changePage)
     }
 
 }

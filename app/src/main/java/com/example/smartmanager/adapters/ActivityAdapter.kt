@@ -8,8 +8,11 @@ import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 import kotlinx.android.synthetic.main.activity_list_row.view.*
 
-class ActivityAdapter(private val dataSet: MutableList<Activity>) : RecyclerView.Adapter<ActivityAdapter.ViewHolder>(){
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+class ActivityAdapter(
+    private val dataSet: MutableList<Activity>,
+    private val listener: OnItemClickListener
+) :
+    RecyclerView.Adapter<ActivityAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return dataSet.size
@@ -38,7 +41,28 @@ class ActivityAdapter(private val dataSet: MutableList<Activity>) : RecyclerView
         activityColor.text = dataSet[position].color
 
         val activityReminder = holder.itemView.textView_reminder
-        if(dataSet[position].reminder == 1){activityReminder.text = R.string.reminder_active.toString()} else {activityReminder.text = R.string.reminder_inactive.toString()}
+        if (dataSet[position].reminder == 1) {
+            activityReminder.text = R.string.reminder_active.toString()
+        } else {
+            activityReminder.text = R.string.reminder_inactive.toString()
+        }
     }
 
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),
+        View.OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val activity = dataSet[adapterPosition]
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                listener.onItemClick(activity)
+            }
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(activity: Activity)
+    }
 }
