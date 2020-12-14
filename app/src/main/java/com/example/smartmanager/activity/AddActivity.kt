@@ -1,5 +1,6 @@
-package com.example.smartmanager
+package com.example.smartmanager.activity
 
+import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
@@ -7,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
 import androidx.annotation.RequiresApi
+import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
@@ -14,19 +16,20 @@ import java.sql.Time
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 class AddActivity : AppCompatActivity() {
 
     val firebaseUser = FirebaseAuth.getInstance()
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
-        val spinner:Spinner = findViewById(R.id.editTextColor)
-        ArrayAdapter.createFromResource(this , R.array.color_array , android.R.layout.simple_spinner_item).also { adapter ->
+        val spinner:Spinner = findViewById(R.id.editText_color)
+        ArrayAdapter.createFromResource(this ,
+            R.array.color_array, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter }
 

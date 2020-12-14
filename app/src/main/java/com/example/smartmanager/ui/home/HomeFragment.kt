@@ -4,24 +4,37 @@ package com.example.smartmanager.ui.home
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.CalendarView
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.smartmanager.AddActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.smartmanager.activity.AddActivity
 import com.example.smartmanager.R
+import com.example.smartmanager.activity.EditActivity
+import com.example.smartmanager.adapters.ActivityAdapter
 import com.example.smartmanager.model.Activity
 import com.google.android.gms.common.util.ArrayUtils.newArrayList
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
     lateinit var ref: DatabaseReference
     lateinit var activityList: MutableList<Activity>
     lateinit var filteredActivity: MutableList<Activity>
@@ -29,6 +42,7 @@ class HomeFragment : Fragment() {
     lateinit var fragmentContext : Context
     lateinit var date : String
     private lateinit var homeViewModel: HomeViewModel
+    private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#B30000"))
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -39,9 +53,11 @@ class HomeFragment : Fragment() {
         homeViewModel =
                 ViewModelProviders.of(this).get(HomeViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        val listView: ListView = root.findViewById(R.id.activity_list_view)
+        //val listView: ListView = root.findViewById(R.id.activity_list_view)
+        val recyclerView : RecyclerView = root.findViewById(R.id.recyclerView_activity)
         val calendar = root.findViewById<CalendarView>(R.id.calendarView)
 
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
         /*
         val text2:TextView = root.findViewById(R.id.text_slideshow)
         val fragment: Fragment? = fragmentManager?.findFragmentById(R.id.text_gallery)
@@ -69,12 +85,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(context,stringDate,Toast.LENGTH_LONG).show()
             filteredActivity = filterActivitiesByDate(date, activityList)
             //show activities with selected date
-            adapter =
-                MyCustomAdapter(
-                    fragmentContext,
-                    filteredActivity
-                )
-            listView.adapter = adapter
+            recyclerView.adapter = ActivityAdapter(filteredActivity, this)
         }
 
         //load list of activity from firebase
@@ -94,22 +105,99 @@ class HomeFragment : Fragment() {
                         val activity = h.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
-                    adapter =
-                        MyCustomAdapter(
-                            fragmentContext,
-                            activityList
-                        )
-                    listView.adapter = adapter
-
+                    recyclerView.adapter = ActivityAdapter(activityList,this@HomeFragment)
                 }
             }
 
         })
+
+        //Swipe to Delete
+        val itemTouchHelperCallback =
+            object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return false
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    val activitiesAsString = ArrayList<String?>()
+                    for (item in activityList) {
+                        val title = item.activityName
+                        activitiesAsString += title
+                    }
+                    val alert = context?.let { AlertDialog.Builder(it) } //val alert = AlertDialog.Builder(context)
+                    alert!!.setCancelable(false)
+                    alert.setTitle(
+                        resources.getText(R.string.are_you_sure)
+                            .toString() + activitiesAsString[viewHolder.adapterPosition] + resources.getText(
+                            R.string.questionMark
+                        ).toString()
+                    )
+                    alert.setPositiveButton(
+                        resources.getText(R.string.yes).toString()
+                    ) { _: DialogInterface, _: Int ->
+                        removeItem(viewHolder.adapterPosition)
+                    }
+
+                    alert.setNegativeButton(
+                        resources.getText(R.string.no).toString()
+                    ) { _: DialogInterface, _: Int ->
+                        adapter.notifyDataSetChanged()
+                    }
+                    alert.show()
+                }
+
+                override fun onChildDraw(
+                    c: Canvas,
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    dX: Float,
+                    dY: Float,
+                    actionState: Int,
+                    isCurrentlyActive: Boolean
+                ) {
+                    val itemView = viewHolder.itemView
+                    if (dX > 0) {
+                        swipeBackground.setBounds(
+                            itemView.left,
+                            itemView.top,
+                            dX.toInt(),
+                            itemView.bottom
+                        )
+                    } else {
+                        swipeBackground.setBounds(
+                            itemView.right + dX.toInt(),
+                            itemView.top,
+                            itemView.right,
+                            itemView.bottom
+                        )
+                    }
+                    swipeBackground.draw(c)
+
+                    super.onChildDraw(
+                        c,
+                        recyclerView,
+                        viewHolder,
+                        dX,
+                        dY,
+                        actionState,
+                        isCurrentlyActive
+                    )
+                }
+            }
+
+
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
+
         return root
     }
 
 
-
+    //nu mai folosim asta
     class MyCustomAdapter(context: Context, activityList: MutableList<Activity>) : BaseAdapter() {
         private val mContext : Context = context
         var myActivityList = newArrayList<Activity>()
@@ -141,7 +229,8 @@ class HomeFragment : Fragment() {
                 activityColor.text = myActivityList[position].color
 
                 val activityReminder = blueActivityRow.findViewById<TextView>(R.id.textView_reminder)
-                if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"} else {activityReminder.text = "reminder inactive"}
+                if(myActivityList[position].reminder == 1){activityReminder.text = R.string.reminder_active.toString()
+                } else {activityReminder.text = R.string.reminder_inactive.toString()}
 
                 return blueActivityRow
             }
@@ -164,7 +253,7 @@ class HomeFragment : Fragment() {
                 activityColor.text = myActivityList[position].color
 
                 val activityReminder = redActivityRow.findViewById<TextView>(R.id.textView_reminder)
-                if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"} else {activityReminder.text = "reminder inactive"}
+                if(myActivityList[position].reminder == 1){activityReminder.text = R.string.reminder_active.toString()} else {activityReminder.text = R.string.reminder_inactive.toString()}
 
                 return redActivityRow
             }
@@ -187,7 +276,7 @@ class HomeFragment : Fragment() {
                 activityColor.text = myActivityList[position].color
 
                 val activityReminder = yellowActivityRow.findViewById<TextView>(R.id.textView_reminder)
-                if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"} else {activityReminder.text = "reminder inactive"}
+                if(myActivityList[position].reminder == 1){activityReminder.text = R.string.reminder_active.toString()} else {activityReminder.text = R.string.reminder_inactive.toString()}
 
                 return yellowActivityRow
             }else{
@@ -209,7 +298,7 @@ class HomeFragment : Fragment() {
             activityColor.text = myActivityList[position].color
 
             val activityReminder = activityRow.findViewById<TextView>(R.id.textView_reminder)
-            if(myActivityList[position].reminder == 1){activityReminder.text = "reminder active"} else {activityReminder.text = "reminder inactive"}
+            if(myActivityList[position].reminder == 1){activityReminder.text = R.string.reminder_active.toString()} else {activityReminder.text = R.string.reminder_inactive.toString()}
 
             return activityRow
             }
@@ -239,4 +328,27 @@ class HomeFragment : Fragment() {
         }
         return filteredActivities
     }
+
+    //delete an activity from Firebase
+    fun removeItem(index: Int){
+        val userUID = FirebaseAuth.getInstance().currentUser?.uid
+        val ref = FirebaseDatabase.getInstance().getReference("User").child(userUID!!).child("Activities")
+        ref.child(activityList[index].id!!).removeValue()
+        Toast.makeText(context,"removed successfully",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onItemClick(activity: Activity) {
+        //Toast.makeText(this.context, "Item ${activity.activityName} clicked", Toast.LENGTH_SHORT).show()
+        val changePage = Intent(this.context, EditActivity::class.java)
+        changePage.putExtra("aId", activity.id)
+        changePage.putExtra("aName", activity.activityName)
+        changePage.putExtra("aDescription", activity.description)
+        changePage.putExtra("aStartTime", activity.startTime)
+        changePage.putExtra("aDate", activity.date)
+        changePage.putExtra("aColor", activity.color)
+        changePage.putExtra("aReminder", activity.reminder)
+        changePage.putExtra("aCompleted", activity.completed)
+        startActivity(changePage)
+    }
+
 }
