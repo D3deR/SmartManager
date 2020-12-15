@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.smartmanager.R
 
 class GalleryFragment : Fragment() {
-
     private lateinit var galleryViewModel: GalleryViewModel
 
     override fun onCreateView(
