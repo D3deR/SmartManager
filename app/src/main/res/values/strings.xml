@@ -45,9 +45,28 @@
     <string name="add_activity">Add</string>
 
     <string-array name="color_array">
-    <item>Red</item>
-    <item>Blue</item>
-    <item>Yellow</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Yellow</item>
     </string-array>
+
+    <string name="reminder_active">Reminder active</string>
+    <string name="reminder_inactive">Reminder inactive</string>
+
+    <string name="are_you_sure">Are you sure you want to delete this item</string>
+    <string name="questionMark">" ?"</string>
+    <string name="yes">yes</string>
+    <string name="no">no</string>
+
+    <string name="name">name</string>
+    <string name="description">description</string>
+    <string name="little_time">time</string>
+    <string name="date">date</string>
+    <string name="color">color</string>
+    <string name="reminder">Reminder</string>
+    <string name="completed">Completed</string>
+    <string name="update">Update</string>
+    <string name="statistics">Statistics</string>
+    <string name="add_a_new_activity">Add a new Activity</string>
 
 </resources>
