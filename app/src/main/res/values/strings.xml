@@ -66,5 +66,7 @@
     <string name="reminder">Reminder</string>
     <string name="completed">Completed</string>
     <string name="update">Update</string>
+    <string name="statistics">Statistics</string>
+    <string name="add_a_new_activity">Add a new Activity</string>
 
 </resources>
