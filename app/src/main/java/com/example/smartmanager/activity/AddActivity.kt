@@ -67,7 +67,7 @@ class AddActivity : AppCompatActivity() {
 
         val uploadBtn = findViewById<Button>(R.id.buttonUploadActivity) as Button
         uploadBtn.setOnClickListener{
-            val activityName : EditText = findViewById(R.id.editTextActivityName)
+            val activityName : EditText = findViewById(R.id.editTextName)
             val activityDescription : EditText = findViewById(R.id.editTextActivityDescription)
             val activityStartTime : TextView = findViewById(R.id.editTextTime)
             val activityDate : TextView = findViewById(R.id.editTextDate)
