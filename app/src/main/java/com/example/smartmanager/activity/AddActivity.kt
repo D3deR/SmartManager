@@ -12,11 +12,13 @@ import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import java.sql.Time
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AddActivity : AppCompatActivity() {
-
+//zzzzzzzzzz
     val firebaseUser = FirebaseAuth.getInstance()
 
     @SuppressLint("SetTextI18n")
@@ -25,17 +27,20 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
-        val spinner:Spinner = findViewById(R.id.editText_color)
+        val spinner:Spinner = findViewById(R.id.editTextColor)
         ArrayAdapter.createFromResource(this ,
             R.array.color_array, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter }
 
-        val timeBtn  = findViewById<Button>(R.id.timeBtn)
-        val dateBtn = findViewById<Button>(R.id.dateBtn)
         val timeView = findViewById<TextView>(R.id.editTextTime)
         val dateView = findViewById<TextView>(R.id.editTextDate)
-        timeBtn.setOnClickListener{
+        val sdf1 = SimpleDateFormat("HH:mm")
+        val currentTime = sdf1.format(Date())
+        val sdf2 = SimpleDateFormat("dd/MM/yyyy")
+        val currentDate = sdf2.format(Date())
+        timeView.text = currentTime
+        timeView.setOnClickListener{
                 val cal = Calendar.getInstance()
                 val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                     cal.set(Calendar.HOUR_OF_DAY, hour)
@@ -45,7 +50,8 @@ class AddActivity : AppCompatActivity() {
                 TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
             }
 
-        dateBtn.setOnClickListener{
+        dateView.text = currentDate
+        dateView.setOnClickListener{
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
@@ -61,12 +67,12 @@ class AddActivity : AppCompatActivity() {
 
         val uploadBtn = findViewById<Button>(R.id.buttonUploadActivity) as Button
         uploadBtn.setOnClickListener{
-            val activityName : EditText = findViewById(R.id.editTextActivityName)
+            val activityName : EditText = findViewById(R.id.editTextName)
             val activityDescription : EditText = findViewById(R.id.editTextActivityDescription)
             val activityStartTime : TextView = findViewById(R.id.editTextTime)
             val activityDate : TextView = findViewById(R.id.editTextDate)
             //val activityColor : EditText = findViewById(R.id.editTextColor)
-            val reminder : CheckBox = findViewById(R.id.checkBoxReminder)
+            val reminder : Switch = findViewById(R.id.reminderSwitch)
 
             val mName = activityName.text.toString()
             val mDescription = activityDescription.text.toString()
