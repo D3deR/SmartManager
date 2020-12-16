@@ -27,7 +27,7 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
-        val spinner:Spinner = findViewById(R.id.editText_color)
+        val spinner:Spinner = findViewById(R.id.editTextColor)
         ArrayAdapter.createFromResource(this ,
             R.array.color_array, android.R.layout.simple_spinner_item).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
