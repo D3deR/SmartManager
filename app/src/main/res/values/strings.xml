@@ -68,5 +68,8 @@
     <string name="update">Update</string>
     <string name="statistics">Statistics</string>
     <string name="add_a_new_activity">Add a new Activity</string>
-
+    <string name="no_activities">You have no activities today</string>
+    <string name="reminderDetail">"Reminder   "</string>
+    <string name="completedDetail">"Completed   "</string>
+    <string name="daily">Daily</string>
 </resources>

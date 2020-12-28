@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
-import com.example.smartmanager.ui.home.HomeFragment
+import com.example.smartmanager.ui.gallery.GalleryFragment
 import kotlinx.android.synthetic.main.activity_list_row.view.*
 
-class ActivityAdapter(
+class GalleryFragmentAdapter(
     private val dataSet: MutableList<Activity>,
-    private val listener: OnItemClickListener
+    private val listener: GalleryFragment
 ) :
-    RecyclerView.Adapter<ActivityAdapter.ViewHolder>() {
+    RecyclerView.Adapter<GalleryFragmentAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return dataSet.size
@@ -25,7 +25,7 @@ class ActivityAdapter(
         return ViewHolder(activityRow)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: GalleryFragmentAdapter.ViewHolder, position: Int) {
         val activityName = holder.itemView.textView_name
         activityName.text = dataSet[position].activityName
 
@@ -48,7 +48,6 @@ class ActivityAdapter(
             activityReminder.text = R.string.reminder_inactive.toString()
         }
     }
-
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),
         View.OnClickListener {
         init {
@@ -62,8 +61,7 @@ class ActivityAdapter(
             }
         }
     }
-
-    interface OnItemClickListener {
+    interface OnItemClickListenerGallery {
         fun onItemClick(activity: Activity)
     }
 }
