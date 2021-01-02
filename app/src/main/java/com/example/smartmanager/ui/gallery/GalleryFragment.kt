@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartmanager.R
 import com.example.smartmanager.activity.DetailActivity
+import com.example.smartmanager.activity.FiltersActivity
 import com.example.smartmanager.adapters.GalleryFragmentAdapter
 import com.example.smartmanager.model.Activity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.text.SimpleDateFormat
@@ -33,6 +35,7 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
     lateinit var ref: DatabaseReference
     lateinit var activityList: MutableList<Activity>
     lateinit var filteredActivity: MutableList<Activity>
+    lateinit var filtersApplied: MutableList<Activity>
     lateinit var date: String
     private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#8bc34a"))
     lateinit var fragmentContext: Context
@@ -47,6 +50,13 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
         val textView: TextView = root.findViewById(R.id.text_no_activities)
 
+        //filter button action
+        val filterBtn: FloatingActionButton = root.findViewById(R.id.floatingActionButton_filter)
+        filterBtn.setOnClickListener {
+            requireActivity().run {
+                startActivity(Intent(this, FiltersActivity::class.java))
+            }
+        }
 
         val recyclerView: RecyclerView = root.findViewById(R.id.recyclerView_galleryFragm)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -79,6 +89,53 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
 
             }
         })
+
+        if(requireActivity().intent.getStringExtra("extra") == "hello"){
+            Toast.makeText(context, "found extras", Toast.LENGTH_SHORT).show()
+        }
+
+        //filter elements
+//        if (requireActivity().intent.hasExtra("colors")) {
+//            val colorFilters: ArrayList<String> =
+//                requireActivity().intent.extras!!.getStringArrayList("colors") as ArrayList<String>
+//            if (colorFilters.contains("Blue")) {
+//                val blue: MutableList<Activity> = filterBlue(activityList)
+//                filtersApplied = (filtersApplied + blue) as MutableList<Activity>
+//            }
+//            if (colorFilters.contains("Red")) {
+//                val red: MutableList<Activity> = filterRed(activityList)
+//                filtersApplied = (filtersApplied + red) as MutableList<Activity>
+//            }
+//            if (colorFilters.contains("Yellow")) {
+//                val yellow: MutableList<Activity> = filterYellow(activityList)
+//                filtersApplied = (filtersApplied + yellow) as MutableList<Activity>
+//            }
+//        }
+
+
+        //order elements
+//        if (requireActivity().intent.hasExtra("order")) {
+//            if (filtersApplied.size != 0) {
+//                val oredrFilter: String? = requireActivity().intent.extras!!.getString("order")
+//                if (oredrFilter == "Ascending") {
+//                    sortByPriorityAscending(filtersApplied)
+//                } else if (oredrFilter == "Descending") {
+//                    sortByPriorityDescending(filtersApplied)
+//                }
+//                recyclerView.adapter =
+//                    GalleryFragmentAdapter(filtersApplied, this@GalleryFragment)
+//            } else {
+//                val oredrFilter: String? = requireActivity().intent.extras!!.getString("order")
+//                if (oredrFilter == "Ascending") {
+//                    sortByPriorityAscending(activityList)
+//                } else if (oredrFilter == "Descending") {
+//                    sortByPriorityDescending(activityList)
+//                }
+//                recyclerView.adapter =
+//                    GalleryFragmentAdapter(activityList, this@GalleryFragment)
+//            }
+//
+//        }
 
         val itemTouchHelperCallback =
             object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -140,7 +197,6 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
 
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-
         return root
     }
 
@@ -170,8 +226,48 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
         return filteredList
     }
 
+    fun sortByPriorityAscending(list: MutableList<Activity>): MutableList<Activity> {
+        return list.sortedBy { it.priority } as MutableList<Activity>
+    }
+
+    fun sortByPriorityDescending(list: MutableList<Activity>): MutableList<Activity> {
+        return list.sortedByDescending { it.priority } as MutableList<Activity>
+    }
+
+    fun filterBlue(list: MutableList<Activity>): MutableList<Activity> {
+        val blueList =  mutableListOf<Activity>()
+        for(activity : Activity in list){
+            if(activity.color == "Blue"){
+                blueList.add(activity)
+            }
+        }
+        return blueList
+    }
+
+    fun filterRed(list: MutableList<Activity>): MutableList<Activity> {
+        val redList =  mutableListOf<Activity>()
+        for(activity : Activity in list){
+            if(activity.color == "Red"){
+                redList.add(activity)
+            }
+        }
+        return redList
+    }
+
+    fun filterYellow(list: MutableList<Activity>): MutableList<Activity> {
+        val yellowList =  mutableListOf<Activity>()
+        for(activity : Activity in list){
+            if(activity.color == "Yellow"){
+                yellowList.add(activity)
+            }
+        }
+        return yellowList
+    }
+
     fun compareDate(activity: Activity): Boolean {
         val sdf2 = SimpleDateFormat("dd/MM/yyyy")
+//        var date = Calendar.getInstance().time
+
         val currentDate = sdf2.format(Calendar.getInstance().time)
         if (activity.date == currentDate) {
             return true
@@ -189,6 +285,7 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
         changePage.putExtra("aColor", activity.color)
         changePage.putExtra("aReminder", activity.reminder)
         changePage.putExtra("aCompleted", activity.completed)
+        changePage.putExtra("aPriority", activity.priority)
         startActivity(changePage)
     }
 }

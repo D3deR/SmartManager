@@ -13,7 +13,7 @@
         android:layout_marginTop="28dp"
         android:layout_marginStart="28dp"
         android:autofillHints="Name"
-        android:hint="Name"
+        android:hint="@string/name_add_Activity"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +26,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="28dp"
         android:autofillHints="Description"
-        android:hint="Description"
+        android:hint="@string/description_add_activity"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         android:layout_marginStart="28dp"
-        android:text="Date: "
+        android:text="@string/date_add_activity"
         android:layout_marginTop="28dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +73,7 @@
         android:layout_height="28dp"
         android:layout_width="wrap_content"
         android:layout_marginStart="28dp"
-        android:text="Time: "
+        android:text="@string/time_add_activity"
         android:layout_marginTop="28dp"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
         android:layout_height="28dp"
         android:layout_marginTop="28dp"
         android:layout_marginStart="28dp"
-        android:text="Color: "
+        android:text="@string/spinnerColor"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateTextView" />
@@ -100,13 +100,34 @@
         app:layout_constraintStart_toEndOf="@id/colorTextView"
         app:layout_constraintTop_toBottomOf="@id/editTextDate" />
 
+    <TextView
+        android:id="@+id/priorityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/priority"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colorTextView" />
+
+    <Spinner
+        android:id="@+id/prioritySpinner"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/priorityTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editTextColor" />
+
     <Switch
         android:id="@+id/reminderSwitch"
         android:layout_width="wrap_content"
         android:layout_height="28dp"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="20dp"
-        android:text="Reminder"
+        android:text="@string/reminder_add_activity"
         android:textSize="20sp"
         android:checked="true"
         android:theme="@style/SCBSwitch"

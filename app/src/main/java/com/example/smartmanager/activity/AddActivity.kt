@@ -33,12 +33,24 @@ class AddActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinner.adapter = adapter }
 
+        val prioritySpinner = findViewById<Spinner>(R.id.prioritySpinner)
+        ArrayAdapter.createFromResource(this, R.array.priority_array ,android.R.layout.simple_spinner_item).also { adapter ->
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            prioritySpinner.adapter = adapter
+        }
+
         val timeView = findViewById<TextView>(R.id.editTextTime)
         val dateView = findViewById<TextView>(R.id.editTextDate)
         val sdf1 = SimpleDateFormat("HH:mm")
         val currentTime = sdf1.format(Date())
         val sdf2 = SimpleDateFormat("dd/MM/yyyy")
+//        var datePlusOneMonth = Calendar.getInstance().run {
+//            add(Calendar.MONTH, 1)
+//            time
+//        }
+//        datePlusOneMonth = sdf2.parse(datePlusOneMonth.toString())!!
         val currentDate = sdf2.format(Date())
+
         timeView.text = currentTime
         timeView.setOnClickListener{
                 val cal = Calendar.getInstance()
@@ -78,9 +90,17 @@ class AddActivity : AppCompatActivity() {
             val mDescription = activityDescription.text.toString()
             val mTime = activityStartTime.text.toString()
             val mDate = activityDate.text.toString()
-            val mColor = spinner.selectedItem.toString();
+            val mColor = spinner.selectedItem.toString()
             val mReminder = if(reminder.isChecked) 1 else 0
             val mCompleted = 0
+            var mPriority  = 0
+            if(prioritySpinner.selectedItem.toString() == "Low"){
+                mPriority = 1
+            }else if(prioritySpinner.selectedItem.toString() == "Medium"){
+                mPriority = 2
+            }else if(prioritySpinner.selectedItem.toString() == "High"){
+                mPriority = 3
+            }
 
             if(mName.isEmpty()){
                 Toast.makeText(this, "Name is empty", Toast.LENGTH_SHORT).show()
@@ -92,6 +112,8 @@ class AddActivity : AppCompatActivity() {
                 Toast.makeText(this, "Date is empty", Toast.LENGTH_SHORT).show()
             }else if(mColor.isEmpty()) {
                 Toast.makeText(this, "Color is empty", Toast.LENGTH_SHORT).show()
+            }else if(mPriority == 0){
+                Toast.makeText(this, "Priority is empty", Toast.LENGTH_SHORT).show()
             }
 
             val userUID = firebaseUser.currentUser!!.uid
@@ -101,7 +123,7 @@ class AddActivity : AppCompatActivity() {
             val activityId = ref.push().key.toString()
 
             //create activity obj
-            val activity = Activity(activityId,mName, mDescription, mTime, mDate,mColor, mReminder, mCompleted)
+            val activity = Activity(activityId,mName, mDescription, mTime, mDate,mColor, mReminder, mCompleted, mPriority)
 
             //send obj to firebase
             ref.child(activityId).setValue(activity)

@@ -1,19 +1,17 @@
 package com.example.smartmanager.activity
 
-import android.os.Build
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
-import androidx.annotation.RequiresApi
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 
-class DetailActivity : AppCompatActivity() {
-    @RequiresApi(Build.VERSION_CODES.M)
+class MainDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_main_detail2)
 
         //toolbar back arrow
         if (supportActionBar != null) {
@@ -43,16 +41,17 @@ class DetailActivity : AppCompatActivity() {
             mPriority
         )
 
-
         //
-        val colorBackgrLayout = findViewById<LinearLayout>(R.id.LinearLayout_activity_title)
-        val actName = findViewById<TextView>(R.id.textView_activity_name)
-        val actTime = findViewById<TextView>(R.id.textView_activity_time)
-        val actDate = findViewById<TextView>(R.id.textView_activity_date)
-        val actPriority = findViewById<TextView>(R.id.textView_activity_priority)
-        val actDescription = findViewById<TextView>(R.id.textView_activity_description)
-        val actReminderSwitch = findViewById<Switch>(R.id.Switch_completed_detail)
-        val actCompletedCheck = findViewById<CheckBox>(R.id.CheckBox_completed_detail)
+        val colorBackgrLayout = findViewById<LinearLayout>(R.id.LinearLayout_activity_title_main)
+        val actName = findViewById<TextView>(R.id.textView_activity_name_main)
+        val actTime = findViewById<TextView>(R.id.textView_activity_time_main)
+        val actDate = findViewById<TextView>(R.id.textView_activity_date_main)
+        val actPriority = findViewById<TextView>(R.id.textView_activity_priority_main)
+        val actDescription = findViewById<TextView>(R.id.textView_activity_description_main)
+        val actReminderSwitch = findViewById<Switch>(R.id.Switch_completed_detail_main)
+        val actCompletedCheck = findViewById<CheckBox>(R.id.CheckBox_completed_detail_main)
+
+        val edit_btn = findViewById<Button>(R.id.button_edit)
 
         //set values
         //trebuie sa ii dau context ca sa nu mai fie depricated
@@ -87,6 +86,21 @@ class DetailActivity : AppCompatActivity() {
         //make checkbox not clickable & set checkbox value
         actCompletedCheck.isClickable = false
         actCompletedCheck.isChecked = mActivity.completed == 1
+
+        edit_btn.setOnClickListener {
+            val changePage = Intent(this, EditActivity::class.java)
+            changePage.putExtra("aId", mActivity.id)
+            changePage.putExtra("aName", mActivity.activityName)
+            changePage.putExtra("aDescription", mActivity.description)
+            changePage.putExtra("aStartTime", mActivity.startTime)
+            changePage.putExtra("aDate", mActivity.date)
+            changePage.putExtra("aColor", mActivity.color)
+            changePage.putExtra("aReminder", mActivity.reminder)
+            changePage.putExtra("aCompleted", mActivity.completed)
+            changePage.putExtra("aPriority", mActivity.priority)
+            startActivity(changePage)
+//            startActivity(intent)
+        }
 
     }
 

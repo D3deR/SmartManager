@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartmanager.activity.AddActivity
 import com.example.smartmanager.R
-import com.example.smartmanager.activity.EditActivity
+import com.example.smartmanager.activity.MainDetailActivity
 import com.example.smartmanager.adapters.ActivityAdapter
 import com.example.smartmanager.model.Activity
 import com.google.android.gms.common.util.ArrayUtils.newArrayList
@@ -338,8 +338,8 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(activity: Activity) {
-        //Toast.makeText(this.context, "Item ${activity.activityName} clicked", Toast.LENGTH_SHORT).show()
-        val changePage = Intent(this.context, EditActivity::class.java)
+        //val changePage = Intent(this.context, EditActivity::class.java)
+        val changePage = Intent(this.context, MainDetailActivity::class.java)
         changePage.putExtra("aId", activity.id)
         changePage.putExtra("aName", activity.activityName)
         changePage.putExtra("aDescription", activity.description)
@@ -348,6 +348,7 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
         changePage.putExtra("aColor", activity.color)
         changePage.putExtra("aReminder", activity.reminder)
         changePage.putExtra("aCompleted", activity.completed)
+        changePage.putExtra("aPriority", activity.priority)
         startActivity(changePage)
     }
 
