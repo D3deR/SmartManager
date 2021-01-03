@@ -3,6 +3,7 @@ package com.example.smartmanager.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
@@ -40,12 +41,13 @@ class ActivityAdapter(
         val activityColor = holder.itemView.textView_color
         activityColor.text = dataSet[position].color
 
-        val activityReminder = holder.itemView.textView_reminder
+        val activityReminder = holder.itemView.reminder
         if (dataSet[position].reminder == 1) {
             activityReminder.text = R.string.reminder_active.toString()
         } else {
             activityReminder.text = R.string.reminder_inactive.toString()
         }
+
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view),
