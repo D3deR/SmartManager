@@ -41,7 +41,7 @@ class GalleryFragmentAdapter(
         val activityColor = holder.itemView.textView_color
         activityColor.text = dataSet[position].color
 
-        val activityReminder = holder.itemView.textView_reminder
+        val activityReminder = holder.itemView.reminder
         if (dataSet[position].reminder == 1) {
             activityReminder.text = R.string.reminder_active.toString()
         } else {
