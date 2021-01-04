@@ -97,4 +97,6 @@
     <string name="date_add_activity">"Date: "</string>
     <string name="time_add_activity">Time:</string>
     <string name="reminder_add_activity">Reminder</string>
+    <string name="back">Back</string>
+    <string name="link">Link</string>
 </resources>

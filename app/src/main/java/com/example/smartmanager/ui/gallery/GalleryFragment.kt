@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -49,6 +50,8 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
             ViewModelProviders.of(this).get(GalleryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
         val textView: TextView = root.findViewById(R.id.text_no_activities)
+
+        (activity as AppCompatActivity).supportActionBar?.title = "Daily Activities"
 
         //filter button action
         val filterBtn: FloatingActionButton = root.findViewById(R.id.floatingActionButton_filter)
@@ -90,9 +93,17 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
             }
         })
 
-        if(requireActivity().intent.getStringExtra("extra") == "hello"){
-            Toast.makeText(context, "found extras", Toast.LENGTH_SHORT).show()
-        }
+
+//        if(this.requireArguments().getString("image") != null){
+//            val fileName = this.requireArguments().getString("image")
+//            Toast.makeText(context, "ouioui", Toast.LENGTH_SHORT).show()
+//        }else{
+//            Toast.makeText(context, "no filters", Toast.LENGTH_SHORT).show()
+//        }
+
+//        if(requireActivity().intent.getStringExtra("extra") == "hello"){
+//            Toast.makeText(context, "found extras", Toast.LENGTH_SHORT).show()
+//        }
 
         //filter elements
 //        if (requireActivity().intent.hasExtra("colors")) {
@@ -153,7 +164,12 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                         val title = item.activityName
                         activitiesAsString += title
                     }
-                    setCompleted(viewHolder.adapterPosition)
+                    if(filteredActivity[viewHolder.adapterPosition].completed == 0){
+                        setCompleted(viewHolder.adapterPosition)
+                    }else{
+                        Toast.makeText(context, "Activity is already completed", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
 
                 override fun onChildDraw(
@@ -165,6 +181,7 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                     actionState: Int,
                     isCurrentlyActive: Boolean
                 ) {
+                    if(filteredActivity[viewHolder.adapterPosition].completed == 0){
                     val itemView = viewHolder.itemView
                     if (dX > 0) {
                         swipeBackground.setBounds(
@@ -192,6 +209,7 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                         actionState,
                         isCurrentlyActive
                     )
+                    }
                 }
             }
 

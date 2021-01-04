@@ -1,9 +1,6 @@
 package com.example.smartmanager.activity
 
 
-import android.R.attr.fragment
-import android.R.attr.key
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.CheckBox
@@ -71,6 +68,10 @@ class FiltersActivity : AppCompatActivity() {
 //            val intent = Intent(this, GalleryFragment::class.java)
 //            intent.putExtra("extra", "hello")
 //            startActivity(intent)
+            val fragment = GalleryFragment()
+            val bundle = Bundle()
+            bundle.putString("image", "hello from the other side")
+            fragment.arguments = bundle //Here pass your data
 
         }
 
