@@ -33,6 +33,16 @@
                 android:textColor="@color/white"
                 android:textSize="36sp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="130dp"
+            />
+
     </RelativeLayout>
 
     <RelativeLayout
@@ -112,13 +122,6 @@
                 android:layout_marginBottom="22dp"
                 android:text="@string/completedDetail"
                 android:textSize="23sp" />
-
-            <Button
-                android:id="@+id/button_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit"
-                android:layout_marginStart="270dp"/>
 
         </LinearLayout>
     </RelativeLayout>
