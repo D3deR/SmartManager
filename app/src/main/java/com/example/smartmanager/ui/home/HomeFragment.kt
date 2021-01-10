@@ -145,7 +145,8 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
                     alert.setNegativeButton(
                         resources.getText(R.string.no).toString()
                     ) { _: DialogInterface, _: Int ->
-                        adapter.notifyDataSetChanged()
+                        //adapter.notifyDataSetChanged()
+                        recyclerView.adapter?.notifyDataSetChanged()
                     }
                     alert.show()
                 }

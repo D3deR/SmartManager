@@ -58,6 +58,7 @@ class SlideshowFragment : Fragment() {
         })
         return root
     }
+
     fun countCompleted(activityList : MutableList<Activity>): Int {
         var completed = 0
         for(activity in activityList){

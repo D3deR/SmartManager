@@ -1,14 +1,23 @@
 package com.example.smartmanager.activity
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 
 class MainDetailActivity : AppCompatActivity() {
+    private val channelID = "Notification Channel"
+    private val notificationId = 389
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_detail2)
@@ -40,6 +49,12 @@ class MainDetailActivity : AppCompatActivity() {
             mCompleted,
             mPriority
         )
+
+        //send Notification
+        createNotificationChannel()
+        if(mActivity.reminder == 1){
+            sendNotification(mActivity)
+        }
 
         //
         val colorBackgrLayout = findViewById<LinearLayout>(R.id.LinearLayout_activity_title_main)
@@ -112,4 +127,28 @@ class MainDetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    //send Notifications
+    private fun createNotificationChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "first notification"
+            val descriptionTxt = "hello there"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelID, name, importance).apply { description =descriptionTxt }
+            val notificationManager : NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun sendNotification(activity: Activity){
+        var builder =
+            NotificationCompat.Builder(this, channelID)
+                .setSmallIcon(R.drawable.notification_icon)
+                .setContentTitle(activity.activityName)
+                .setContentText("hello there :) ${activity.activityName} is starting soon" )
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId, builder.build())
+        }
+    }
 }
