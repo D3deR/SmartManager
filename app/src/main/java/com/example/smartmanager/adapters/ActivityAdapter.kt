@@ -1,13 +1,18 @@
 package com.example.smartmanager.adapters
 
+import android.app.PendingIntent.getActivity
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 import com.example.smartmanager.ui.home.HomeFragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_list_row.view.*
 
 class ActivityAdapter(
@@ -47,6 +52,56 @@ class ActivityAdapter(
             activityReminder.text = R.string.reminder_active.toString()
         } else {
             activityReminder.text = R.string.reminder_inactive.toString()
+        }
+
+        val completedBox = holder.itemView.completed
+        if (dataSet[position].completed == 1) {
+            completedBox.isChecked = true
+        }
+        completedBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                val userUID = FirebaseAuth.getInstance().currentUser?.uid
+                val ref = userUID?.let {
+                    FirebaseDatabase.getInstance().getReference("User").child(it).child("Activities")
+                }
+                val completed = dataSet[position]
+                completed.completed = 1
+
+                if (ref != null) {
+                    ref.child(completed.id!!).setValue(completed)
+                }
+                //finish()
+                //Toast.makeText(context, "Congrats! Activity completed", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val userUID = FirebaseAuth.getInstance().currentUser?.uid
+                val ref = userUID?.let {
+                    FirebaseDatabase.getInstance().getReference("User").child(it).child("Activities")
+                }
+                val completed = dataSet[position]
+                completed.completed = 0
+
+                if (ref != null) {
+                    ref.child(completed.id!!).setValue(completed)
+                }
+                //finish()
+                //Toast.makeText(context, "Congrats! Activity completed", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        fun setCompleted(index: Int) {
+            val userUID = FirebaseAuth.getInstance().currentUser?.uid
+            val ref = userUID?.let {
+                FirebaseDatabase.getInstance().getReference("User").child(it).child("Activities")
+            }
+            val completed = dataSet[index]
+            completed.completed = 1
+
+            if (ref != null) {
+                ref.child(completed.id!!).setValue(completed)
+            }
+            //finish()
+            //Toast.makeText(context, "Congrats! Activity completed", Toast.LENGTH_SHORT).show()
         }
 
     }

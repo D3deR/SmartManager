@@ -6,12 +6,12 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import org.w3c.dom.Text
 import java.text.SimpleDateFormat
 import java.util.*
 
