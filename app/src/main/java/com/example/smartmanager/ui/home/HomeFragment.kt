@@ -36,7 +36,7 @@ import com.google.firebase.database.*
 
 class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
     lateinit var ref: DatabaseReference
-    lateinit var activityList: MutableList<Activity>
+    companion object {lateinit var activityList: MutableList<Activity>}
     lateinit var filteredActivity: MutableList<Activity>
     lateinit var adapter: MyCustomAdapter
     lateinit var fragmentContext : Context
@@ -78,6 +78,7 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
             }
         }
 
+
         //gets selected date from calendar
         calendar.setOnDateChangeListener { view, year, month, dayOfMonth ->
             val stringDate = "$dayOfMonth/$month/$year"
@@ -91,7 +92,6 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
         //load list of activity from firebase
         val userUID = FirebaseAuth.getInstance().currentUser?.uid
         ref = FirebaseDatabase.getInstance().getReference("User").child(userUID!!).child("Activities")
-
         activityList = mutableListOf()
         ref.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
@@ -105,12 +105,18 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
                         val activity = h.getValue(Activity::class.java)
                         activityList.add(activity!!)
                     }
+                    ref.removeEventListener(this)
                     recyclerView.adapter = ActivityAdapter(activityList,this@HomeFragment)
                 }
             }
 
         })
 
+        /**
+        activityList = mutableListOf()
+        val referenceToDatabase =DataBase.create()
+        referenceToDatabase.getActivities {activityList }
+        **/
         //Swipe to Delete
         val itemTouchHelperCallback =
             object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
@@ -196,8 +202,6 @@ class HomeFragment : Fragment(), ActivityAdapter.OnItemClickListener {
 
         return root
     }
-
-
     //nu mai folosim asta
     class MyCustomAdapter(context: Context, activityList: MutableList<Activity>) : BaseAdapter() {
         private val mContext : Context = context
