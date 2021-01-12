@@ -7,14 +7,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+
 import android.widget.ListView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import android.widget.TextView
+import android.widget.Toast
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.replace
 import com.example.smartmanager.R
+
 import com.example.smartmanager.act.MonthlyStatisticsActivity
 import com.example.smartmanager.activity.OnSwipeTouchListener
 import com.example.smartmanager.model.Activity
@@ -32,11 +37,18 @@ import java.util.*
 class SlideshowFragment : Fragment() {
 
 
+import com.example.smartmanager.model.Activity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
+
+class SlideshowFragment : Fragment() {
+    lateinit var ref: DatabaseReference
+    lateinit var activityList: MutableList<Activity>
+    private lateinit var slideshowViewModel: SlideshowViewModel
     lateinit var ref: DatabaseReference
     private var barDataSet: BarDataSet? = null
     lateinit var barChart: BarChart
     var barData: BarData? = null
-    // var barEntries: ArrayList<BarEntry>? = null
     lateinit var listView:ListView
     lateinit var activityList:MutableList<Activity>
 
@@ -64,6 +76,7 @@ class SlideshowFragment : Fragment() {
                 Toast.makeText(context, "Monthly statistics", Toast.LENGTH_SHORT).show()
             }
         })
+
         activityList = HomeFragment.activityList
         barDataSet = BarDataSet(getData() ,"Daily View" )
         barData = BarData(barDataSet)
@@ -174,5 +187,4 @@ class SlideshowFragment : Fragment() {
         }
         return entries
     }
-
 }

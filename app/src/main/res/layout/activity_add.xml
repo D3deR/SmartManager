@@ -7,168 +7,143 @@
     tools:context=".activity.AddActivity">
 
     <EditText
-        android:id="@+id/editTextActivityName"
+        android:id="@+id/editTextName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="28dp"
         android:autofillHints="Name"
+        android:hint="@string/name_add_Activity"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.412"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Name"
-        app:layout_constraintEnd_toStartOf="@+id/editTextActivityName"
-        app:layout_constraintHorizontal_bias="0.413"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <EditText
         android:id="@+id/editTextActivityDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="28dp"
         android:autofillHints="Description"
+        android:hint="@string/description_add_activity"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextActivityName" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Description"
-        app:layout_constraintEnd_toStartOf="@+id/editTextActivityDescription"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <Button
-        android:id="@id/dateBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="212dp"
-        android:layout_marginEnd="65dp"
-        android:text="@string/pick_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/editTextName" />
 
     <TextView
         android:id="@+id/editTextDate"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="16dp"
         android:autofillHints="Date"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.336"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTime" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="24dp"
-        android:text="Date"
-        app:layout_constraintEnd_toStartOf="@+id/editTextDate"
-        app:layout_constraintHorizontal_bias="0.551"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/dateTextView"
+        app:layout_constraintTop_toBottomOf="@id/editTextTime" />
 
     <TextView
         android:id="@+id/editTextTime"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:autofillHints="Time"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.336"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextActivityDescription" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/timeTextView"
+        app:layout_constraintTop_toBottomOf="@id/editTextActivityDescription" />
 
-
-    <Button
-        android:id="@id/timeBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="256dp"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="65dp"
-        android:text="@string/pick_time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/time"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTime"
+        android:layout_height="28dp"
+        android:layout_marginStart="28dp"
+        android:text="@string/date_add_activity"
+        android:layout_marginTop="28dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@id/timeTextView"/>
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/timeTextView"
+        android:layout_height="28dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Color"
-        app:layout_constraintEnd_toStartOf="@+id/editText_color"
-        app:layout_constraintHorizontal_bias="0.157"
+        android:layout_marginStart="28dp"
+        android:text="@string/time_add_activity"
+        android:layout_marginTop="28dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@id/editTextActivityDescription"/>
+
+    <TextView
+        android:id="@+id/colorTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="28dp"
+        android:text="@string/spinnerColor"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateTextView" />
 
     <Spinner
-        android:id="@+id/editText_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:ems="10"
+        android:id="@+id/editTextColor"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginStart="16dp"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.234"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDate" />
+        app:layout_constraintStart_toEndOf="@id/colorTextView"
+        app:layout_constraintTop_toBottomOf="@id/editTextDate" />
 
-    <CheckBox
-        android:id="@+id/checkBoxReminder"
+    <TextView
+        android:id="@+id/priorityTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="Reminder"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.037"
+        android:layout_height="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/priority"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_color" />
+        app:layout_constraintTop_toBottomOf="@+id/colorTextView" />
+
+    <Spinner
+        android:id="@+id/prioritySpinner"
+        android:layout_width="120dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="28dp"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toEndOf="@+id/priorityTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editTextColor" />
+
+    <Switch
+        android:id="@+id/reminderSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/reminder_add_activity"
+        android:textSize="20sp"
+        android:checked="true"
+        android:theme="@style/SCBSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonUploadActivity" />
 
     <Button
         android:id="@+id/buttonUploadActivity"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:text="Add"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
+        android:text="@string/add_activity"
+        android:background="#0E68FF"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.139"

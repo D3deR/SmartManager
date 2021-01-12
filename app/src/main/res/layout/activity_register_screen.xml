@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".activity.EmailLogin"
     android:orientation="vertical"
     android:weightSum="4"
@@ -145,7 +146,10 @@
                     android:layout_weight="2"
                     android:background="@color/colorPrimary"
                     android:text="@string/register"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginLeft="48dp"
+                    android:layout_marginRight="48dp"/>
 
 
             </LinearLayout>

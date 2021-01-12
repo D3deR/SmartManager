@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout_activity_title_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    android:background="@color/colorPrimary">
+<!--    android:theme="@style/AppTheme.NoActionBar">-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
+
+            <TextView
+                android:id="@+id/textView_activity_name_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="@string/welcome1"
+                android:textColor="@color/white"
+                android:textSize="36sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="130dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:elevation="36dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@drawable/card_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="70dp">
+
+            <TextView
+                android:id="@+id/textView_activity_time_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_listView_row_time"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="28sp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="22dp"/>
+
+            <TextView
+                android:id="@+id/textView_activity_date_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_listView_row_date"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="28sp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="22dp"/>
+
+            <TextView
+                android:id="@+id/textView_activity_priority_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_listView_row_description"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="28sp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="22dp"/>
+
+            <TextView
+                android:id="@+id/textView_activity_description_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_listView_row_description"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:textSize="28sp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="22dp"/>
+
+            <Switch
+                android:id="@+id/Switch_completed_detail_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="22dp"
+                android:text="@string/reminderDetail"
+                android:textSize="23sp"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+            <CheckBox
+                android:id="@+id/CheckBox_completed_detail_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginBottom="22dp"
+                android:text="@string/completedDetail"
+                android:textSize="23sp" />
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

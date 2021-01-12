@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.*
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.smartmanager.R
 import com.example.smartmanager.model.Activity
@@ -44,8 +45,8 @@ class EditActivity : AppCompatActivity() {
         //
         val nameEditTxt= findViewById<EditText>(R.id.editText_activity_name)
         val descriptionEditTxt = findViewById<EditText>(R.id.editText_description)
-        val timeEditTxt = findViewById<EditText>(R.id.editText_time)
-        val dateEditTxt = findViewById<EditText>(R.id.editText_date)
+        val timeEditTxt = findViewById<TextView>(R.id.editText_time)
+        val dateEditTxt = findViewById<TextView>(R.id.editText_date)
         val colorSpinner = findViewById<Spinner>(R.id.editText_color)
         val reminderSwitch = findViewById<Switch>(R.id.switch_reminder)
         val completedCheck = findViewById<CheckBox>(R.id.checkBox_completed)
@@ -67,8 +68,7 @@ class EditActivity : AppCompatActivity() {
         completedCheck.isChecked = (mActivity.completed == 1)
 
         //edit time and date
-        val timeBtn = findViewById<Button>(R.id.btn_time)
-        timeBtn.setOnClickListener{
+        timeEditTxt.setOnClickListener{
             val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
                 cal.set(Calendar.HOUR_OF_DAY, hour)
@@ -77,8 +77,7 @@ class EditActivity : AppCompatActivity() {
             }
             TimePickerDialog(this, timeSetListener, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true).show()
         }
-        val dateBtn = findViewById<Button>(R.id.btn_date)
-        dateBtn.setOnClickListener {
+        dateEditTxt.setOnClickListener {
             val c = Calendar.getInstance()
             val year = c.get(Calendar.YEAR)
             val month = c.get(Calendar.MONTH)
@@ -129,7 +128,7 @@ class EditActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // handle arrow click here
         if (item.itemId == android.R.id.home) {
-            finish() // close this activity and return to preview activity (if there is any)
+            finish() // close this activity and return to previous activity (if there is any)
         }
         return super.onOptionsItemSelected(item)
     }

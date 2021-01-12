@@ -42,11 +42,18 @@
     <string name="activity_listView_row_name">Activity Name</string>
     <string name="activity_listView_row_color">Activity Color</string>
     <string name="activity_listView_row_reminder">Activity Reminder</string>
+    <string name="add_activity">Add</string>
 
     <string-array name="color_array">
         <item>Red</item>
         <item>Blue</item>
         <item>Yellow</item>
+    </string-array>
+
+    <string-array name="priority_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
     </string-array>
 
     <string name="reminder_active">Reminder active</string>
@@ -69,5 +76,31 @@
     <string name="add_a_new_activity">Add a new Activity</string>
     <string name="textview" />
     <string name="lorem_ipsum" />
+
+    <string name="no_activities">You have no activities today</string>
+    <string name="reminderDetail">"Reminder   "</string>
+    <string name="completedDetail">"Completed   "</string>
+    <string name="daily">Daily</string>
+    <string name="priority">Priority:</string>
+    <string name="spinnerColor">Color:</string>
+    <string name="low_priority">Low</string>
+    <string name="medium_priority">Medium</string>
+    <string name="high_priority">High</string>
+    <string name="no_priority">No priority Selected</string>
+    <string name="filter_by_color">Filter by color</string>
+    <string name="blue">Blue</string>
+    <string name="red">Red</string>
+    <string name="yellow">Yellow</string>
+    <string name="order_by_priority">Order By Priority:</string>
+    <string name="low_to_high">Low to High</string>
+    <string name="high_to_low">High to Low</string>
+    <string name="edit">Edit</string>
+    <string name="name_add_Activity">Name</string>
+    <string name="description_add_activity">Description</string>
+    <string name="date_add_activity">"Date: "</string>
+    <string name="time_add_activity">Time:</string>
+    <string name="reminder_add_activity">Reminder</string>
+    <string name="back">Back</string>
+    <string name="link">Link</string>
 
 </resources>
