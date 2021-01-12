@@ -41,6 +41,7 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
     private var swipeBackground: ColorDrawable = ColorDrawable(Color.parseColor("#8bc34a"))
     lateinit var fragmentContext: Context
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -60,6 +61,7 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                 startActivity(Intent(this, FiltersActivity::class.java))
             }
         }
+
 
         val recyclerView: RecyclerView = root.findViewById(R.id.recyclerView_galleryFragm)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -86,23 +88,60 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                 filteredActivity = filterList(activityList)
                 if (filteredActivity.size > 0) {
                     textView.visibility = View.INVISIBLE //GONE
-                    recyclerView.adapter =
-                        GalleryFragmentAdapter(filteredActivity, this@GalleryFragment)
+                    if (arguments != null) {
+                        filtersApplied = applyFilters(filteredActivity)
+                        filteredActivity.clear()
+                        filteredActivity = filtersApplied
+
+                        val newRecyclerView: RecyclerView = root.findViewById(R.id.recyclerView_galleryFragm)
+                        recyclerView.layoutManager = LinearLayoutManager(context)
+                        recyclerView.adapter = GalleryFragmentAdapter(filteredActivity,this@GalleryFragment)
+
+//                        recyclerView.adapter =
+//                            GalleryFragmentAdapter(filtersApplied, this@GalleryFragment)
+                        if (recyclerView.adapter != null) {
+                            recyclerView.adapter!!.notifyDataSetChanged()
+                        }
+                    } else {
+                        recyclerView.adapter =
+                            GalleryFragmentAdapter(filteredActivity, this@GalleryFragment)
+                    }
                 }
 
             }
         })
 
-
-//        if(this.requireArguments().getString("image") != null){
-//            val fileName = this.requireArguments().getString("image")
-//            Toast.makeText(context, "ouioui", Toast.LENGTH_SHORT).show()
-//        }else{
-//            Toast.makeText(context, "no filters", Toast.LENGTH_SHORT).show()
-//        }
-
-//        if(requireActivity().intent.getStringExtra("extra") == "hello"){
-//            Toast.makeText(context, "found extras", Toast.LENGTH_SHORT).show()
+        //filter elements
+//        if(arguments != null){
+////            val blueActivities: MutableList<Activity>
+////            val redActivities: MutableList<Activity>
+////            val yellowActivities: MutableList<Activity>
+////            var allFilters : MutableList<Activity> //=  mutableListOf<Activity>()
+//
+//            val mArgs = arguments
+//            val red = mArgs?.getString("red")
+//            val blue = mArgs?.getString("blue")
+//            val yellow = mArgs?.getString("yellow")
+//            val order = mArgs?.getString("order")
+//            Toast.makeText(context, "Red : $red", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Blue : $blue", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, "Yellow : $yellow", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context, order, Toast.LENGTH_SHORT).show()
+//
+//            if (blue == "true") {
+//                Toast.makeText(context, "Blue : $red", Toast.LENGTH_SHORT).show()
+//                //blueActivities = filterBlue(filteredActivity)
+//               //allFilters = mergeLists(blueActivities, blueActivities)
+//            }
+//            if (red == "true") {
+//                Toast.makeText(context, "Red : $blue", Toast.LENGTH_SHORT).show()
+//
+//            }
+//            if (yellow == "true") {
+//                Toast.makeText(context, "Yellow : $yellow", Toast.LENGTH_SHORT).show()
+//
+//            }
+//
 //        }
 
         //filter elements
@@ -164,10 +203,11 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                         val title = item.activityName
                         activitiesAsString += title
                     }
-                    if(filteredActivity[viewHolder.adapterPosition].completed == 0){
+                    if (filteredActivity[viewHolder.adapterPosition].completed == 0) {
                         setCompleted(viewHolder.adapterPosition)
-                    }else{
-                        Toast.makeText(context, "Activity is already completed", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Activity is already completed", Toast.LENGTH_SHORT)
+                            .show()
                     }
 
                 }
@@ -181,34 +221,34 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
                     actionState: Int,
                     isCurrentlyActive: Boolean
                 ) {
-                    if(filteredActivity[viewHolder.adapterPosition].completed == 0){
-                    val itemView = viewHolder.itemView
-                    if (dX > 0) {
-                        swipeBackground.setBounds(
-                            itemView.left,
-                            itemView.top,
-                            dX.toInt(),
-                            itemView.bottom
-                        )
-                    } else {
-                        swipeBackground.setBounds(
-                            itemView.right + dX.toInt(),
-                            itemView.top,
-                            itemView.right,
-                            itemView.bottom
-                        )
-                    }
-                    swipeBackground.draw(c)
+                    if (filteredActivity[viewHolder.adapterPosition].completed == 0) {
+                        val itemView = viewHolder.itemView
+                        if (dX > 0) {
+                            swipeBackground.setBounds(
+                                itemView.left,
+                                itemView.top,
+                                dX.toInt(),
+                                itemView.bottom
+                            )
+                        } else {
+                            swipeBackground.setBounds(
+                                itemView.right + dX.toInt(),
+                                itemView.top,
+                                itemView.right,
+                                itemView.bottom
+                            )
+                        }
+                        swipeBackground.draw(c)
 
-                    super.onChildDraw(
-                        c,
-                        recyclerView,
-                        viewHolder,
-                        dX,
-                        dY,
-                        actionState,
-                        isCurrentlyActive
-                    )
+                        super.onChildDraw(
+                            c,
+                            recyclerView,
+                            viewHolder,
+                            dX,
+                            dY,
+                            actionState,
+                            isCurrentlyActive
+                        )
                     }
                 }
             }
@@ -253,9 +293,9 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
     }
 
     fun filterBlue(list: MutableList<Activity>): MutableList<Activity> {
-        val blueList =  mutableListOf<Activity>()
-        for(activity : Activity in list){
-            if(activity.color == "Blue"){
+        val blueList = mutableListOf<Activity>()
+        for (activity: Activity in list) {
+            if (activity.color == "Blue") {
                 blueList.add(activity)
             }
         }
@@ -263,9 +303,9 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
     }
 
     fun filterRed(list: MutableList<Activity>): MutableList<Activity> {
-        val redList =  mutableListOf<Activity>()
-        for(activity : Activity in list){
-            if(activity.color == "Red"){
+        val redList = mutableListOf<Activity>()
+        for (activity: Activity in list) {
+            if (activity.color == "Red") {
                 redList.add(activity)
             }
         }
@@ -273,13 +313,39 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
     }
 
     fun filterYellow(list: MutableList<Activity>): MutableList<Activity> {
-        val yellowList =  mutableListOf<Activity>()
-        for(activity : Activity in list){
-            if(activity.color == "Yellow"){
+        val yellowList = mutableListOf<Activity>()
+        for (activity: Activity in list) {
+            if (activity.color == "Yellow") {
                 yellowList.add(activity)
             }
         }
         return yellowList
+    }
+
+    fun applyFilters(list: MutableList<Activity>): MutableList<Activity> {
+        val blueActivities: MutableList<Activity>
+        val redActivities: MutableList<Activity>
+        val yellowActivities: MutableList<Activity>
+        var allColors = mutableListOf<Activity>()
+        val mArgs = arguments
+        val red = mArgs?.getString("red")
+        val blue = mArgs?.getString("blue")
+        val yellow = mArgs?.getString("yellow")
+        val order = mArgs?.getString("order")
+
+        if (blue == "true") {
+            blueActivities = filterBlue(list)
+            allColors = mergeLists(allColors, blueActivities)
+        }
+        if (red == "true") {
+            redActivities = filterRed(list)
+            allColors = mergeLists(allColors, redActivities)
+        }
+        if (yellow == "true") {
+            yellowActivities = filterYellow(list)
+            allColors = mergeLists(allColors, yellowActivities)
+        }
+        return allColors
     }
 
     fun compareDate(activity: Activity): Boolean {
@@ -291,6 +357,16 @@ class GalleryFragment : Fragment(), GalleryFragmentAdapter.OnItemClickListenerGa
             return true
         }
         return false
+    }
+
+    private fun mergeLists(
+        list1: MutableList<Activity>,
+        list2: MutableList<Activity>
+    ): MutableList<Activity> {
+        for (elem in list2) {
+            list1.add(elem)
+        }
+        return list1
     }
 
     override fun onItemClick(activity: Activity) {
