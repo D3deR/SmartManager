@@ -15,7 +15,6 @@
         <activity android:name=".activity.MainDetailActivity" />
         <activity android:name=".activity.FiltersActivity" />
         <activity android:name=".activity.DetailActivity" />
-        <activity android:name=".activity.EditActivity" />
         <activity android:name=".activity.AddActivity" />
         <activity
             android:name=".activity.RegisterScreen"
